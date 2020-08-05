@@ -5,7 +5,7 @@ classe = pd.read_csv("saidas_breast.csv")
 
 # divisão dos dados entre teste (25%) e treinamento (75%)
 from sklearn.model_selection import train_test_split
-previsores_treinamento, previsores_teste, classe_treinamento, clases_teste = train_test_split(previsores, classe, test_size = 0.25)
+previsores_treinamento, previsores_teste, classe_treinamento, classe_teste = train_test_split(previsores, classe, test_size = 0.25)
 
 import keras
 from keras.models import Sequential
@@ -33,3 +33,15 @@ classificador.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics=
 # batch_size => numero de calculo de erros para recalcular os pesos
 # epochs => numero de ajustes de peso
 classificador.fit(previsores_treinamento, classe_treinamento, batch_size = 10, epochs = 100)
+
+
+previsoes = classificador.predict(previsores_teste)
+previsoes = (previsoes > 0.5)
+
+from sklearn.metrics import confusion_matrix, accuracy_score
+precisao = accuracy_score(classe_teste, previsoes)
+
+matriz = confusion_matrix(classe_teste, previsoes)
+
+
+resultado = classificador.evaluate(previsores_teste, classe_teste)
