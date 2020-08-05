@@ -33,3 +33,22 @@ classificador.compile(optimizer = 'adam',
                       metrics = ['categorical_accuracy'])
 
 classificador.fit(previsores_treinamento, classe_treinamento, batch_size = 10, epochs= 1000)
+
+# faz a previsao utilizando a keras 
+resultado = classificador.evaluate(previsores_teste, classe_teste)
+
+# faz a previsao "manualmente" 
+previsoes = classificador.predict(previsores_teste)
+previsoes = previsoes > 0.5
+
+# converte a saída o índice que queremos 
+# 1 0 0 => retorna 0
+# 0 1 0 => retorna 1
+# 0 0 1 => retorna 2
+import numpy as np
+classe_teste2 = [np.argmax(t) for t in classe_teste]
+previsoes2 = [np.argmax(t) for t in previsoes]
+
+                 
+from sklearn.metrics import confusion_matrix
+matriz = confusion_matrix(previsoes2, classe_teste2)
