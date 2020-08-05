@@ -22,13 +22,20 @@ classificador = Sequential()
 # primeira camada oculta
 classificador.add(Dense(units = 16, activation = 'relu', kernel_initializer='random_uniform', input_dim = 30))
 
+# segunda camada oculta
+classificador.add(Dense(units = 16, activation = 'relu', kernel_initializer='random_uniform'))
+
 # camada de saída
 classificador.add(Dense(units = 1, activation= 'sigmoid'))
+
+# lr => variação prao calculo do erro
+# decay => diminuição do lr a cada atualização
+otimizador = keras.optimizers.Adam(lr = 0.001, decay=0.0001)
 
 # optimizer => função de ajuste dos pesos
 # loss => calculo do erro
 # metrics => classificação dos resultados
-classificador.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics= ['binary_accuracy'])
+classificador.compile(optimizer = otimizador, loss = 'binary_crossentropy', metrics= ['binary_accuracy'])
 
 # batch_size => numero de calculo de erros para recalcular os pesos
 # epochs => numero de ajustes de peso
