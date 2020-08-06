@@ -49,3 +49,18 @@ base['notRepairedDamage'].value_counts() # nein
 valores = {'vehicleType': 'limousine', 'gearbox' : 'manuell', 'model' : 'golf', 'fuelType' : 'benzin', 'notRepairedDamage' : 'nein'}
 
 base = base.fillna(value = valores)
+
+previsores = base.iloc[:, 1:13].values
+preco_real = base.iloc[:, 0].values
+
+from sklearn.preprocessing import LabelEncoder
+
+labelenconder_previsores = LabelEncoder()
+
+previsores[:,0] = labelenconder_previsores.fit_transform(previsores[:,0])
+previsores[:,1] = labelenconder_previsores.fit_transform(previsores[:,1])
+previsores[:,3] = labelenconder_previsores.fit_transform(previsores[:,3])
+previsores[:,5] = labelenconder_previsores.fit_transform(previsores[:,5])
+previsores[:,8] = labelenconder_previsores.fit_transform(previsores[:,8])
+previsores[:,9] = labelenconder_previsores.fit_transform(previsores[:,9])
+previsores[:,10] = labelenconder_previsores.fit_transform(previsores[:,10])
